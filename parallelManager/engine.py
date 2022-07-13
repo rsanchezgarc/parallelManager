@@ -1,13 +1,14 @@
 import cloudpickle
 
-from dask_utils import init_dask
+from parallelManager.backends.dask.dask_utils import init_dask
 import concurrent
 from concurrent.futures import Executor
 import logging as python_logging
 from typing import Literal
 from tqdm import tqdm
-from executors import DummyExecutor
-from backends import defaults
+from parallelManager.backends import defaults
+from parallelManager.executors import DummyExecutor
+
 
 class JobLauncher():
     WAIT_TIMEOUT = None #6000

@@ -1,7 +1,6 @@
-import os
 import warnings
 from datetime import datetime
-import backends.dask.defaults as defaults
+import parallelManager.backends.dask.defaults as defaults
 
 def init_dask(dask_cluster = "condor", cores=1, jobs=1, memory="8GB", disk="4GB", n_gpus=None,
               dask_config_vars=defaults.DASK_DEFAULT_CONFIG, worker_init_funtions=defaults.WORKER_INIT_FUNCTIONS,

@@ -1,6 +1,5 @@
-import os
 import time
-from engine import JobLauncher
+from parallelManager.engine import JobLauncher
 
 
 def test_process():
