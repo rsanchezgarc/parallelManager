@@ -1,0 +1,9 @@
+#Add multi-node gpu support for pytorch
+
+On condor cluster:
+
+#master
+NCCL_SOCKET_IFNAME=eth0 python -m torch.distributed.run --nnodes=2 --master_addr 192.168.199.121 --master_port 44328 --node_rank 0 tryMultiNodesPytorchLigt.py
+
+#worker
+NCCL_SOCKET_IFNAME=eth0 python -m torch.distributed.run --nnodes=2 --master_addr 192.168.199.121 --master_port 44328 --node_rank 1 tryMultiNodesPytorchLigt.py
