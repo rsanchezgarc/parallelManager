@@ -12,7 +12,7 @@ from parallelManager.executors import DummyExecutor
 #TODO: Create a classmethod or a function that creates JobLaunchers and keeps track of the resourecs allocated
 
 class JobLauncher():
-    WAIT_TIMEOUT = None #6000
+    WAIT_TIMEOUT = 360000
 
     def __init__(self, n_workers:int=1, n_cores:int=1, level:Literal["nodes", "processes","threads", "debug"]="processes",
                  dask_cluster:str="condor", monitoring=True, batch_factor=4,
@@ -80,7 +80,7 @@ class JobLauncher():
     def close(self):
         if self.level in ["nodes", "daskprocesses"]:
             self._executor.shutdown() #close()
-        else:
+        elif self._executor:
             self._executor.shutdown()
 
     def __del__(self):
