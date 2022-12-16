@@ -22,7 +22,7 @@ def init_dask(dask_cluster:Literal["condor","local","debug"] = "condor", n_nodes
         assert n_dask_workers == 1 or n_cores == 1, "Error, n_dask_workers == 1 or n_cores == 1 required. Decide if you want" \
                                                     "to have one worker with multiple cores of multiple workers with one single core"
 
-        env_extra= [f'export {k.upper().replace(".", "__")}"{v}"' for k,v in dask_config_vars] # This was comment out, is it ok now?
+        env_extra= [f'export {k.upper().replace(".", "__")}"{v}"' for k,v in dask_config_vars.items()]
         submit_command_extra = ["request_cpus=%d"%n_cores]
 
         if n_gpus:

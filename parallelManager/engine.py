@@ -35,7 +35,7 @@ class JobLauncher():
         self.dask_cluster = dask_cluster or getattr(defaults, "dask_cluster", None)
         self.batch_factor = batch_factor
         self.verbose = verbose
-        self.kwargs = kwargs or getattr(defaults, "kwargs", None)
+        self.kwargs = kwargs or getattr(defaults, "kwargs", {})
         if not monitoring:
             self.kwargs["dashboard_address"] = None
         assert self.level in ["nodes", "processes", "daskprocesses", "threads", "debug"]
@@ -60,7 +60,7 @@ class JobLauncher():
                 self._executor = concurrent.futures.ProcessPoolExecutor(self.n_workers, mp_context=ctx)
                 _old_submit = self._executor.submit
 
-                def robust_submit(fun, /,*args, **kwargs):
+                def robust_submit(fun, /,*args, **kwargs): #TODO: may not work with decorators
                     bytes_ = cloudpickle.dumps((fun,args, kwargs))
                     return _old_submit(deserialize_and_execute, bytes_)
                 self._executor.submit = robust_submit
