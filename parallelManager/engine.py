@@ -38,7 +38,7 @@ class JobLauncher():
         self.kwargs = kwargs or getattr(defaults, "kwargs", None)
         if not monitoring:
             self.kwargs["dashboard_address"] = None
-        assert self.level in ["nodes", "processes", "threads", "debug"]
+        assert self.level in ["nodes", "processes", "daskprocesses", "threads", "debug"]
 
         if self.level == "debug":
             self.istarmap = lambda fun, args_list, batch_factor=self.batch_factor: (fun(*args) for args in args_list)
@@ -74,13 +74,13 @@ class JobLauncher():
             else:
                 raise Exception(f"Error, level ({self.level}) is not valid")
         else:
-            print("Executor already exists")
+            pass
+            # print("Executor already exists")
         return self._executor
 
     def close(self):
-        if self.level in ["nodes", "daskprocesses"]:
-            self._executor.shutdown() #close()
-        elif self._executor:
+
+        if hasattr(self, "_executor") and self._executor:
             self._executor.shutdown()
 
     def __del__(self):
